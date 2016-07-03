@@ -1,14 +1,13 @@
 #!/usr/bin/with-contenv sh
 set -e
 
-
-
 if ! [ -e index.php ]; then
 	echo >&2 "DokuWiki not found in $(pwd) - copying now..."
 	if [ "$(ls -A)" ]; then
 		echo >&2 "WARNING: $(pwd) is not empty - press Ctrl+C now if this is an error!"
 		( set -x; ls -A; sleep 10 )
 	fi
+	ls
 	tar cf - -C /usr/src/dokuwiki . | tar xf -
 	echo >&2 "Complete! DokuWiki has been successfully copied to $(pwd)"
 fi
