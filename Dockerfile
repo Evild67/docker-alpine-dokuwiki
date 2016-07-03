@@ -7,7 +7,7 @@ RUN apk add --no-cache --virtual .build-deps \
                 autoconf gcc libc-dev make \
                 libpng-dev libjpeg-turbo-dev \
         && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
-        && docker-php-ext-install gd mysqli opcache \
+        && docker-php-ext-install gd opcache \
         && find /usr/local/lib/php/extensions -name '*.a' -delete \
         && find /usr/local/lib/php/extensions -name '*.so' -exec strip --strip-all '{}' \; \
         && runDeps="$( \
@@ -33,10 +33,11 @@ RUN { \
 
 VOLUME /var/www/html
 
-RUN curl -o wordpress.tar.gz -SL http://download.dokuwiki.org/src/dokuwiki/dokuwiki-$DOKUWIKI_VERSION.tgz \
+RUN curl -o dokuwiki-$DOKUWIKI_VERSION.tgz -SL http://download.dokuwiki.org/src/dokuwiki/dokuwiki-$DOKUWIKI_VERSION.tgz \
         && echo "$MD5_CHECKSUM  dokuwiki-$DOKUWIKI_VERSION.tgz" | md5sum -c - \
         && tar xzf "dokuwiki-$DOKUWIKI_VERSION.tgz" -C /usr/src/ \
-        && rm dokuwiki-$DOKUWIKI_VERSION.tgz
-        && chown -R www-data:www-data /usr/src/wordpress
+        && rm dokuwiki-$DOKUWIKI_VERSION.tgz \
+        && mv /usr/src/dokuwiki-$DOKUWIKI_VERSION /usr/src/dokuwiki \
+        && chown -R www-data:www-data /usr/src/dokuwiki
 
 ADD root /
