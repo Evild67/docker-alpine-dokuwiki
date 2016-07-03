@@ -1,7 +1,7 @@
 FROM evild/alpine-php:7.0.8
 
-ARG DOKUWIKI_VERSION=2016-06-26
-ARG MD5_CHECKSUM=a4b8ae00ce94e42d4ef52dd8f4ad30fe
+ARG DOKUWIKI_VERSION=2016-06-26a
+ARG MD5_CHECKSUM=9b9ad79421a1bdad9c133e859140f3f2
 
 RUN apk add --no-cache --virtual .build-deps \
                 autoconf gcc libc-dev make \
