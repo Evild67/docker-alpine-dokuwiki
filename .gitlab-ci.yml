@@ -1,26 +1,16 @@
 stages:
-  - build
   - test
-  - cleanup
   - tweet
   - deploy
 
-
-build_job:
-  stage: build
-  script:
-    - ci/wordpress_build
+before_script:
+  - docker info
 
 test_job:
   stage: test
   script:
-    - ci/wordpress_test
+    - ci/dokuwiki_build
 
-cleanup:
-  stage: cleanup
-  script:
-    - ci/wordpress_cleanup
-  when: always
 
 tweet_succeed_job:
   variables:
@@ -31,7 +21,7 @@ tweet_succeed_job:
     - triggers
     - master
   script:
-    - ci/wordpress_tweet
+    - ci/dokuwiki_tweet
 
 tweet_failed_job:
   variables:
@@ -42,7 +32,7 @@ tweet_failed_job:
     - triggers
     - master
   script:
-    - ci/wordpress_tweet
+    - ci/dokuwiki_tweet
   when: on_failure
 
 deploy_job:
@@ -52,4 +42,4 @@ deploy_job:
     - triggers
     - master
   script:
-    - ci/wordpress_deploy
+    - ci/dokuwiki_deploy
