@@ -9,8 +9,7 @@ before_script:
 test_job:
   stage: test
   script:
-    - ci/dokuwiki_build
-
+    - ci/dokuwiki_test
 
 tweet_succeed_job:
   variables:
